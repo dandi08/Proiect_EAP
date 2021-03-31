@@ -1,0 +1,8 @@
+materie,Electronica Analogica,multe rau cate se poate,7.5 9.25
+materie,Retele 1 si 2,10.10.2021,10 10 10 10
+materie,Informatica,0,10 10 9
+elev,Bucurie,Bogdan
+materie,Matematica,nu are,9.5 9 8.5 10
+elev,duta,andrei
+clasa,Clasa I,Marian Vanghelie,marus
+scoala,Scoala Sfantul Iacob,Strada General Grigore Grecescu Nr3
