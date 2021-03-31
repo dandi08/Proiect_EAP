@@ -1,0 +1,3 @@
+marus,ciprian,profesor
+duta,123456,elev
+root,admin,admin
