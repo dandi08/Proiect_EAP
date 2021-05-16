@@ -4,7 +4,7 @@ materie,Matematica,salut,9.5 9.0 8.5 10.0
 elev,andrei,duta
 materie,Electronica Analogica,multe rau cate se poate,7.5 9.25
 materie,Retele 1 si 2,cateva,10.0 10.0 10.0 10.0
-materie,Informatica, 10.02.2021 08012021,10.0 10.0 9.0
+materie,Informatica, 10.02.2021 08012021,10.0 10.0 9.0 9.0
 elev,Bogdan,Bucurie
-clasa,Clasa I,Marian Vanghelie,marus
+catalog,Clasa I,Marian Vanghelie,marus
 scoala,Scoala Sfantul Iacob,Strada General Grigore Grecescu Nr3

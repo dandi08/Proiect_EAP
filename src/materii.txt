@@ -1,0 +1,7 @@
+franceza,0,6,duta
+romana,1,10,duta
+Electronica Analogica,999,7.5 9.25,Bucurie
+Retele 1 si 2,3,10.0 10.0 10.0 10.0,Bucurie
+Informatica,2,10.0 10.0 9.0 9.0,Bucurie
+Matematica,1,9.5 9.0 8.5 10.0,duta
+
