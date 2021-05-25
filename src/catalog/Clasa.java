@@ -2,7 +2,8 @@ package catalog;
 
 import java.util.*;
 
-public class Clasa {
+public class Clasa implements Comparable<Clasa>{
+    int idScoala;
     private String numeClasa;
     private String invatator;
     private String cnpInvatator;
@@ -11,11 +12,20 @@ public class Clasa {
     public Clasa() {
     }
 
-    public Clasa(String numeClasa, String invatator, String cnpInvatator, HashMap<String, Elev> elevi) {
+    public Clasa(int idScoala, String numeClasa, String invatator, String cnpInvatator, HashMap<String, Elev> elevi) {
+        this.idScoala = idScoala;
         this.numeClasa = numeClasa;
         this.invatator = invatator;
         this.cnpInvatator = cnpInvatator;
         this.elevi = elevi;
+    }
+
+    public int getIdScoala() {
+        return idScoala;
+    }
+
+    public void setIdScoala(int idScoala) {
+        this.idScoala = idScoala;
     }
 
     public void adaugaElev(Elev elev){
@@ -54,8 +64,12 @@ public class Clasa {
         this.elevi = elevi;
     }
 
-    @Override
-    public String toString() {
-        return super.toString();
+    public void addElevMap(Elev elev){
+        elevi.put(elev.getCnp(), elev);
     }
+
+    public int compareTo(Clasa clasa){
+        return this.getNumeClasa().compareTo(clasa.getNumeClasa());
+    }
+
 }

@@ -14,9 +14,20 @@ import java.util.Scanner;
 public class Meniu {
 
     public static void main(String[] args) {
+        Scanner scan1 = new Scanner(System.in);
+        System.out.println("1 - baza de date \n2 - csv");
+        int op = scan1.nextInt();
         Servicii servicii = new Servicii();
-        Scoala scoala = new Scoala();
-        scoala = Servicii.citireCatalog();
+        SqlConnection sql = new SqlConnection();
+        if(op == 2) {
+            servicii.citireCatalog();
+            servicii.setBd(false);
+        }
+        else {
+            servicii.setScoala(sql.citireTabel());
+            servicii.setBd(true);
+        }
+        //servicii.afisareCatalog();
         //HashMap<String, User> userMap = new HashMap();
         servicii.citireFisier();
         // Afisare HashMap dupa valori si chei
@@ -35,7 +46,6 @@ public class Meniu {
             System.out.print("Parola: ");
             String parola = scan.nextLine();
             user = servicii.logare(nume, parola);
-            System.out.println("Datele introduse sunt gresite. Incercati din nou!");
         }while(user.getNume().equals("gresit"));
         if(user.getStatut().equals("admin"))
         {
@@ -52,7 +62,7 @@ public class Meniu {
                 if(x.equals("1"))
                     servicii.administrareConturi(admin);
                 else if(x.equals("2"))
-                    servicii.administrareCatalog(scoala);
+                    servicii.administrareCatalog();
                 else if(!x.equals("0"))
                     System.out.println("Nu ati introdus o valoare corecta");
             }
@@ -61,7 +71,7 @@ public class Meniu {
         else if(user.getStatut().equals("elev")){
             servicii.logs("Logare elev");
             System.out.println("-----" + user.getStatut());
-            HashMap<String, Clasa> mapClase = scoala.getClase();
+            HashMap<String, Clasa> mapClase = servicii.getScoala().getClase();
             LoginElev loginElev = new LoginElev();
             for (Clasa it : mapClase.values()) {
                 HashMap<String, Elev> mapElevi = it.getElevi();
@@ -107,10 +117,10 @@ public class Meniu {
         }
         else if(user.getStatut().equals("profesor")){
             servicii.logs("Logare profesor");
-            if(scoala.getClase().containsKey(user.getNume())){
+            if(servicii.getScoala().getClase().containsKey(user.getNume())){
                 String x  = "1";
                 Scanner scan = new Scanner(System.in);
-                Profesor profesor = new Profesor(user.getNume(), user.getparola(), user.getStatut(), scoala.getClase().get(user.getNume()));
+                Profesor profesor = new Profesor(user.getNume(), user.getparola(), user.getStatut(), servicii.getScoala().getClase().get(user.getNume()));
                 while(!x.equals("0")) {
                     System.out.println("Pentru a iesi si a salva modificarile introdu 0.");
                     System.out.println("1 - Schimba parola");
@@ -121,6 +131,7 @@ public class Meniu {
                     System.out.println("6 - Adauga absenta");
                     System.out.println("7 - Sterge materie");
                     System.out.println("8 - Adauga materie");
+                    System.out.println("9 - Modifica nume materie");
                     x = scan.nextLine();
                     if (x.equals("1")){
                         servicii.logs("Schimba parola");
@@ -134,32 +145,37 @@ public class Meniu {
                     else if(x.equals("3")) {
                         servicii.logs("Sterge nota");
                         profesor.stergeNota();
-                        scoala.getClase().put(profesor.getNume(), profesor.getClasa());
+                        servicii.getScoala().getClase().put(profesor.getNume(), profesor.getClasa());
                     }
                     else if(x.equals("4")){
                         servicii.logs("Adauga nota");
                         profesor.adaugaNota();
-                        scoala.getClase().put(profesor.getNume(), profesor.getClasa());
+                        servicii.getScoala().getClase().put(profesor.getNume(), profesor.getClasa());
                     }
                     else if(x.equals("5")) {
                         servicii.logs("Sterge absenta");
                         profesor.stergeAbsenta();
-                        scoala.getClase().put(profesor.getNume(), profesor.getClasa());
+                        servicii.getScoala().getClase().put(profesor.getNume(), profesor.getClasa());
                     }
                     else if(x.equals("6")){
                         servicii.logs("Adauga absenta");
                         profesor.adaugaAbsenta();
-                        scoala.getClase().put(profesor.getNume(), profesor.getClasa());
+                        servicii.getScoala().getClase().put(profesor.getNume(), profesor.getClasa());
                     }
                     else if(x.equals("7")) {
                         servicii.logs("Sterge materie");
                         profesor.stergeMaterie();
-                        scoala.getClase().put(profesor.getNume(), profesor.getClasa());
+                        servicii.getScoala().getClase().put(profesor.getNume(), profesor.getClasa());
                     }
                     else if(x.equals("8")){
                         servicii.logs("Adauga materie");
                         profesor.adaugaMaterie();
-                        scoala.getClase().put(profesor.getNume(), profesor.getClasa());
+                        servicii.getScoala().getClase().put(profesor.getNume(), profesor.getClasa());
+                    }
+                    else if(x.equals("9")){
+                        servicii.logs("Modifica nume materie");
+                        profesor.modificaNumeMaterie();
+                        servicii.getScoala().getClase().put(profesor.getNume(), profesor.getClasa());
                     }
                     else if (!x.equals("0"))
                         System.out.println("Nu ati introdus o valoare corecta");
@@ -169,6 +185,6 @@ public class Meniu {
                 System.out.println("Profesorul nu are nicio clasa momentan!");
             servicii.afisareFisier();
         }
-        Servicii.scriereCatalog(scoala);
+        servicii.scriereCatalog();
     }
 }

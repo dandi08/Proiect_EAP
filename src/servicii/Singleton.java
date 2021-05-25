@@ -1,4 +1,4 @@
-package proba123;
+package servicii;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -6,13 +6,11 @@ public class Singleton{
 
     private static final Singleton instance = new Singleton();
 
-    @SuppressWarnings( "rawtypes")
     private Map<Class,Object> mapHolder = new HashMap<Class,Object>();
 
     private Singleton() {
     }
 
-    @SuppressWarnings("unchecked")
     public static <T> T getInstance(Class<T> classOf) throws InstantiationException, IllegalAccessException {
 
         synchronized(instance){

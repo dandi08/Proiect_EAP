@@ -5,12 +5,26 @@ import java.util.*;
 public class Elev {
     private String numeElev;
     private String cnp;
+    private String numeClasa;
     private HashMap<String, Materie> materii = new HashMap<>();
 
-    public Elev(String numeElev, String cnp, HashMap<String, Materie> materii) {
+    public Elev(String numeClasa, String numeElev, String cnp, HashMap<String, Materie> materii) {
         this.numeElev = numeElev;
         this.cnp = cnp;
         this.materii = materii;
+        this.numeClasa = numeClasa;
+    }
+
+    public Elev(){
+
+    }
+
+    public String getNumeClasa() {
+        return numeClasa;
+    }
+
+    public void setNumeClasa(String numeClasa) {
+        this.numeClasa = numeClasa;
     }
 
     public void adaugaMaterie(Materie materie) {
@@ -41,12 +55,13 @@ public class Elev {
         this.materii = materii;
     }
 
+    public void addMaterieMap(Materie materie){
+        this.materii.put(materie.getNumeMaterie(), materie);
+    }
+
     @Override
     public String toString() {
-        String afisare = "Nume: " + numeElev;
-        for (Materie it : materii.values()) {
-            afisare.concat("Nume materie: " + it.getNumeMaterie() + "\n" + "Absente: " + it.getAbsente() + "\n" + "Note: " + it.getNote() + "\n");
-        }
+        String afisare = "Nume: " + numeElev + " CNP: " + cnp + " Clasa: " + numeClasa;
         return afisare;
     }
 }

@@ -5,15 +5,25 @@ import java.util.ArrayList;
 public class Materie {
     private String numeMaterie;
     private String absente;
+    private int idMaterie;
     private ArrayList<Float> note = new ArrayList<Float>();
 
     public Materie() {
     }
 
-    public Materie(String numeMaterie, String absente, ArrayList<Float> note) {
+    public Materie(int idMaterie, String numeMaterie, String absente, ArrayList<Float> note) {
         this.numeMaterie = numeMaterie;
         this.absente = absente;
         this.note = note;
+        this.idMaterie = idMaterie;
+    }
+
+    public int getIdMaterie() {
+        return idMaterie;
+    }
+
+    public void setIdMaterie(int idMaterie) {
+        this.idMaterie = idMaterie;
     }
 
     public String getNumeMaterie() {

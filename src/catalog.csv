@@ -1,1 +1,12 @@
-scoala,Scoala Sfantul Iacob,Strada General Grigore Grecescu Nr3
+materie,2,romana,20.01.2000,7.0 9.0
+materie,8,geografie,,7.0
+materie,1,Limba1, 08.02.2021,6.0
+materie,6,Matematica,20.04.2000,10.0 10.0 9.0
+elev,Clasa 1,andrei,duta
+materie,3,Electronica Analogica,09.02.2000 08.05.2000,10.0 10.0
+materie,4,Retele 1 si 2,,10.0 10.0
+materie,5,Informatica,12.02.2000,8.0 7.0 10.0
+elev,Clasa 1,bogdan,Bucurie
+clasa,1,Clasa 1,Marian Vanghelie,marus
+clasa,1,A,andrei,500060
+scoala,1,Scoala nr 3,Str

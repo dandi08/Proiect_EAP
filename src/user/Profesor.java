@@ -1,9 +1,13 @@
 package user;
-
+import java.sql.*;
 import catalog.Clasa;
 import catalog.Elev;
 import catalog.Materie;
+import servicii.SqlConnection;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.Statement;
 import java.util.*;
 
 public class Profesor extends User{
@@ -144,8 +148,15 @@ public class Profesor extends User{
             System.out.println("Materia data nu a fost gasita!");
             return;
         }
+        SqlConnection sql = new SqlConnection();
+        try {
+            Connection con = DriverManager.getConnection(sql.getPath(), sql.getUsername(), sql.getPassword());
+            Statement stmt = con.createStatement();
+            System.out.println("Delete from materii where Id_materie =" + clasa.getElevi().get(nume).getMaterii().get(materie).getIdMaterie() + ")");
+            stmt.executeUpdate("Delete from materii where Id_materie = " + clasa.getElevi().get(nume).getMaterii().get(materie).getIdMaterie());
+            con.close();
+        }catch(Exception e){ System.out.println(e);}
         clasa.getElevi().get(nume).getMaterii().remove(materie);
-
         System.out.println("Materia a fost stearsa cu succes!");
     }
 
@@ -159,21 +170,57 @@ public class Profesor extends User{
         }
         System.out.print("Dati numele materiei: ");
         String materie = scan.nextLine();
+        System.out.print("Dati idul materiei: ");
+        String id = scan.nextLine();
+        int idMaterie = Integer.parseInt(id);
         Materie mat = new Materie();
         mat.setNumeMaterie(materie);
+        mat.setIdMaterie(idMaterie);
         clasa.getElevi().get(nume).getMaterii().put(materie, mat);
         System.out.print("Dati nota pe care doriti sa o adaugati: ");
         float nota = Float.parseFloat(scan.nextLine());
         clasa.getElevi().get(nume).getMaterii().get(materie).getNote().add(nota);
         clasa.getElevi().get(nume).getMaterii().get(materie).setAbsente("");
+        SqlConnection sql = new SqlConnection();
+        try {
+            Connection con = DriverManager.getConnection(sql.getPath(), sql.getUsername(), sql.getPassword());
+            Statement stmt = con.createStatement();
+            System.out.println("Insert into materii values ( \"" + materie + "\"," + idMaterie + ")");
+            System.out.println("Insert into elevimaterii values ( \"" + nota + "\", \"\" ," + idMaterie + ",\"" + nume + "\")");
+            stmt.executeUpdate("Insert into materii values ( \"" + materie + "\"," + idMaterie + ")");
+            stmt.executeUpdate("Insert into elevimaterii values ( \"" + nota + "\", \"\" ," + idMaterie + ",\"" + nume + "\")");
+            con.close();
+        }catch(Exception e){ System.out.println(e);}
         System.out.println("Materia a fost adaugata cu succes!");
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Clasa clasa = (Clasa) o;
-        return Objects.equals(nume, clasa.getCnpInvatator());
+    public void modificaNumeMaterie(){
+        Scanner scan = new Scanner(System.in);
+        System.out.print("Dati CNPul elevului: ");
+        String nume = scan.nextLine();
+        if(!clasa.getElevi().containsKey(nume)){
+            System.out.println("Elevul dat nu a fost gasit!");
+            return;
+        }
+        System.out.print("Dati numele materiei: ");
+        String materie = scan.nextLine();
+        if(!clasa.getElevi().get(nume).getMaterii().containsKey(materie)){
+            System.out.println("Materia data nu a fost gasita!");
+            return;
+        }
+        System.out.print("Dati numele nou al materiei: ");
+        String materieNoua = scan.nextLine();
+        Materie mat = clasa.getElevi().get(nume).getMaterii().get(materie);
+        mat.setNumeMaterie(materieNoua);
+        clasa.getElevi().get(nume).getMaterii().put(materieNoua, mat);
+        clasa.getElevi().get(nume).getMaterii().remove(materie);
+        SqlConnection sql = new SqlConnection();
+        try {
+            Connection con = DriverManager.getConnection(sql.getPath(), sql.getUsername(), sql.getPassword());
+            Statement stmt = con.createStatement();
+            stmt.executeUpdate("UPDATE materii set Nume_materie = \"" + materieNoua + "\" where Id_materie = \"" + mat.getIdMaterie() + "\"");
+            con.close();
+        }catch(Exception e){ System.out.println(e);}
     }
+
 }
